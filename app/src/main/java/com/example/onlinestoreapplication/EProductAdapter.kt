@@ -4,9 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.e_product_row.view.*
+
+
 
 class EProductAdapter(var context: Context, var arrayList: ArrayList<EProduct>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -37,7 +40,16 @@ class EProductAdapter(var context: Context, var arrayList: ArrayList<EProduct>):
             var picUrl = "http://192.168.68.101/OnlineStoreApp/osimages/"
             picUrl = picUrl.replace(" ", "%20")
             Picasso.get().load(picUrl + picName).into(itemView.imgProduct)
+
+            itemView.imgAdd.setOnClickListener {
+
+                Person.addToCartProductID = id
+                var amountFragment = AmountFragment()
+                var fragmentManager = (itemView.context as FragmentActivity).supportFragmentManager
+                amountFragment.show(fragmentManager, "TAG")
+            }
         }
 
     }
+
 }

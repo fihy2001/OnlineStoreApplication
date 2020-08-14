@@ -12,16 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FetchEProductsActivity"></activity>
+        <activity android:name=".CartProductsActivity"></activity>
+        <activity android:name=".FetchEProductsActivity" />
         <activity android:name=".HomeScreen">
+
+        </activity>
+        <activity android:name=".SignUpLayout" />
+        <activity android:name=".MainActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpLayout" />
-        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
