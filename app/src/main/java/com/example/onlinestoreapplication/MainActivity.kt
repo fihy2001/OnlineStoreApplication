@@ -1,10 +1,10 @@
 package com.example.onlinestoreapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         activity_main_btnLogin.setOnClickListener {
-            var loginURL = "http://192.168.68.101/OnlineStoreApp/login_app_user.php?email=" +
+            var loginURL = "http://" + getString(R.string.url) + "/OnlineStoreApp/login_app_user.php?email=" +
                     activity_main_edtEmail.text.toString() +
                     "&pass=" + activity_main_edtPassword.text.toString()
 

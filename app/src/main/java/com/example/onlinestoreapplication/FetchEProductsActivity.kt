@@ -1,8 +1,8 @@
 package com.example.onlinestoreapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -20,7 +20,7 @@ class FetchEProductsActivity : AppCompatActivity() {
         var productsList = ArrayList<EProduct>()
 
         val productsUrl =
-            "http://192.168.68.101/OnlineStoreApp/fetch_eproducts.php?brand=$selectedBrand"
+            "http://" + getString(R.string.url) + "/OnlineStoreApp/fetch_eproducts.php?brand=$selectedBrand"
         val requestQ = Volley.newRequestQueue(this@FetchEProductsActivity)
         val jsonAR = JsonArrayRequest(Request.Method.GET, productsUrl, null, Response.Listener{response ->
 

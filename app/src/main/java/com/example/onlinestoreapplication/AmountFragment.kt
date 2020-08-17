@@ -29,7 +29,7 @@ class AmountFragment : DialogFragment() {
 
         btnAddToCart.setOnClickListener {
 
-            var ptoUrl = "http://192.168.68.101/OnlineStoreApp/insert_temporary_order.php?email=${Person.email}&product_id=${Person.addToCartProductID}&amount=${edtEnterAmount.text.toString()}"
+            var ptoUrl = "http://" + getString(R.string.url) + "/OnlineStoreApp/insert_temporary_order.php?email=${Person.email}&product_id=${Person.addToCartProductID}&amount=${edtEnterAmount.text.toString()}"
             var requestQ = Volley.newRequestQueue(activity)
             var stringRequest = StringRequest(Request.Method.GET, ptoUrl, Response.Listener {response ->
 

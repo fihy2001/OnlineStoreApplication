@@ -1,13 +1,12 @@
 package com.example.onlinestoreapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_sign_up_layout.*
@@ -26,7 +25,7 @@ class SignUpLayout : AppCompatActivity() {
         sign_up_layout_btnSignUp.setOnClickListener {
             if (sign_up_layout_edtPassword.text.toString() == sign_up_layout_edtConfirmPassword.text.toString()){
 
-                val signUpURL = "http://192.168.68.101/OnlineStoreApp/join_new_user.php?email=" +
+                val signUpURL = "http://" + getString(R.string.url) + "/OnlineStoreApp/join_new_user.php?email=" +
                             sign_up_layout_edtEmail.text.toString() +
                             "&username=" +
                             sign_up_layout_edtUsername.text.toString() +

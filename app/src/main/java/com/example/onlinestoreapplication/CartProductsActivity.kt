@@ -1,12 +1,17 @@
 package com.example.onlinestoreapplication
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_cart_products.*
 
@@ -15,7 +20,7 @@ class CartProductsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart_products)
 
-        var cartProductsUrl = "http://192.168.68.101/OnlineStoreApp/fetch_temporary_order.php?email=${Person.email}"
+        var cartProductsUrl = "http://" + getString(R.string.url) + "/OnlineStoreApp/fetch_temporary_order.php?email=${Person.email}"
         var cartProductList = ArrayList<String>()
         var requestQ = Volley.newRequestQueue(this@CartProductsActivity)
         var jsonAR = JsonArrayRequest(Request.Method.GET, cartProductsUrl, null, Response.Listener {response ->
@@ -41,5 +46,55 @@ class CartProductsActivity : AppCompatActivity() {
         } )
         requestQ.add(jsonAR)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cart_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item?.itemId == R.id.continueShoppingItem){
+            var intent = Intent(this@CartProductsActivity, HomeScreen::class.java)
+            startActivity(intent)
+        } else if (item?.itemId == R.id.declineOrderItem) {
+            var deleteUrl = "http://" + getString(R.string.url) + "/OnlineStoreApp/decline_order.php?email=${Person.email}"
+            var requestQ = Volley.newRequestQueue(this@CartProductsActivity)
+            var stringRequest = StringRequest(Request.Method.GET, deleteUrl, Response.Listener {  
+                response ->
+
+                var intent = Intent(this, HomeScreen::class.java)
+                startActivity(intent)
+
+            }, Response.ErrorListener {
+                error ->
+                val dialogBuilder = AlertDialog.Builder(this)
+                dialogBuilder.setTitle("Message")
+                dialogBuilder.setMessage(error.message)
+                dialogBuilder.create().show()
+            })
+            requestQ.add(stringRequest)
+        } else if (item?.itemId == R.id.verifyOrderItem){
+
+            var verifyOrderUrl = "http://" + getString(R.string.url) + "/OnlineStoreApp/verify_order.php?email=${Person.email}"
+            var requestQ = Volley.newRequestQueue(this@CartProductsActivity)
+            var stringRequest = StringRequest(Request.Method.GET, verifyOrderUrl, Response.Listener { response ->
+
+                var intent = Intent(this@CartProductsActivity, FinalizeShoppingActivity::class.java)
+                Toast.makeText(this, response, Toast.LENGTH_LONG).show()
+                intent.putExtra("LATEST_INVOICE_NUMBER", response)
+                startActivity(intent)
+
+            }, Response.ErrorListener { error ->
+                val dialogBuilder = AlertDialog.Builder(this)
+                dialogBuilder.setTitle("Message")
+                dialogBuilder.setMessage(error.message)
+                dialogBuilder.create().show()
+
+            })
+            requestQ.add(stringRequest)
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
